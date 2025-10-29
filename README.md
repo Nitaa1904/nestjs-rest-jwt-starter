@@ -1,98 +1,255 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🧠 Simple REST API – NestJS + TypeORM + JWT
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Proyek ini merupakan **simple REST API** yang dibuat menggunakan **NestJS (TypeScript)** dengan fitur **autentikasi JWT**, **relasi antar entitas**, dan **pengujian E2E (End-to-End Test)** menggunakan **Supertest**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Proyek ini mensimulasikan sistem sederhana seperti forum mini, di mana pengguna dapat **register**, **login**, serta **membuat dan melihat postingan**.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Fitur Utama
 
-## Project setup
+✅ **Autentikasi JWT**  
+Pengguna dapat register dan login untuk mendapatkan token akses (JWT).  
+Token ini digunakan untuk mengakses endpoint yang dilindungi.
 
-```bash
-$ npm install
+✅ **Relasi Antar Entity (User ↔ Post)**  
+Setiap postingan terhubung dengan pengguna yang membuatnya (one-to-many relationship).
+
+✅ **Operasi CRUD Sederhana**
+
+- Create dan Get All Posts
+- Create User (Register)
+
+✅ **Database SQL (PostgreSQL / MySQL / SQLite)**  
+Menggunakan **TypeORM** untuk ORM mapping dan relasi antar tabel.
+
+✅ **E2E Testing**  
+Dilengkapi pengujian otomatis untuk validasi endpoint register, login, dan akses endpoint dengan JWT.
+
+---
+
+## 🧩 Arsitektur & Pola yang Digunakan
+
+### 🧱 Pattern: **Modular Architecture Pattern (NestJS Default)**
+
+Proyek ini menggunakan **pattern modular**, di mana setiap fitur memiliki module sendiri — seperti `auth`, `users`, dan `posts`.
+
+#### 📦 Alasan Menggunakan Pattern Ini:
+
+1. **Terstruktur dan Skalabel** – Setiap fitur terpisah dalam modulnya sendiri, sehingga mudah dikembangkan tanpa saling mengganggu.
+2. **Mendukung Dependency Injection (DI)** – NestJS mengoptimalkan arsitektur ini agar setiap service/controller bisa di-_inject_ dengan mudah.
+3. **Mempermudah Testing dan Maintenance** – Modul yang terpisah memungkinkan pengujian unit dan E2E dilakukan lebih terisolasi.
+4. **Best Practice NestJS** – Modular pattern adalah _recommended pattern_ di dokumentasi resmi NestJS untuk project enterprise-level.
+
+Struktur folder:
+
 ```
 
-## Compile and run the project
+src/
+├── auth/
+│ ├── auth.controller.ts
+│ ├── auth.module.ts
+│ ├── auth.service.ts
+│ └── jwt.strategy.ts
+├── users/
+│ ├── dto/
+│ ├── user.entity.ts
+│ ├── users.controller.ts
+│ ├── users.module.ts
+│ └── users.service.ts
+├── posts/
+│ ├── post.entity.ts
+│ ├── posts.controller.ts
+│ ├── posts.module.ts
+│ └── posts.service.ts
+├── common/
+│ └── guards/
+│ └── jwt-auth.guard.ts
+└── app.module.ts
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Run tests
+---
+
+## ⚙️ Instalasi & Konfigurasi
+
+### 1️⃣ Clone Repository
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/Nitaa1904/nestjs-rest-jwt-starter.git
+cd nestjs-simple-restapi
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 2️⃣ Install Dependencies
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 3️⃣ Konfigurasi Environment
 
-## Resources
+Buat file `.env` di root project:
 
-Check out a few resources that may come in handy when working with NestJS:
+```
+DATABASE_URL=postgres://user:password@localhost:5432/db_name
+JWT_SECRET=your_secret_key
+JWT_EXPIRES_IN=3600s
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 4️⃣ Jalankan Database Migration (jika pakai TypeORM)
 
-## Support
+```bash
+npm run build
+npm run typeorm migration:run
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 5️⃣ Jalankan Aplikasi
 
-## Stay in touch
+```bash
+npm run start:dev
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Aplikasi akan berjalan di:
+👉 `http://localhost:3000`
 
-## License
+---
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 📮 Dokumentasi API (Postman)
+
+### 🧑‍💻 Register
+
+**POST** `/auth/register`
+
+```json
+{
+  "email": "nita@gmail.com",
+  "password": "123456",
+  "name": "Nita"
+}
+```
+
+### 🔐 Login
+
+**POST** `/auth/login`
+
+```json
+{
+  "email": "nita@gmail.com",
+  "password": "123456"
+}
+```
+
+Response:
+
+```json
+{
+  "access_token": "<JWT_TOKEN>"
+}
+```
+
+### 📝 Create Post (Protected)
+
+**POST** `/posts`
+Header:
+
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+Body:
+
+```json
+{
+  "title": "My First Post",
+  "content": "Halo ini post pertama Nita!"
+}
+```
+
+### 📜 Get All Posts
+
+**GET** `/posts`
+
+Response:
+
+```json
+[
+  {
+    "id": 1,
+    "title": "My First Post",
+    "content": "Halo ini post pertama Nita!",
+    "user": {
+      "id": 5,
+      "email": "nita@gmail.com",
+      "name": "Nita"
+    }
+  }
+]
+```
+
+---
+
+## 🧪 E2E Testing
+
+Jalankan pengujian:
+
+```bash
+npm run test:e2e
+```
+
+Contoh pengujian di `app.e2e-spec.ts`:
+
+```typescript
+it('Register -> Login -> Access Protected', async () => {
+  await request(app.getHttpServer())
+    .post('/auth/register')
+    .send({ email: 'nita@gmail.com', password: '123456', name: 'Nita' })
+    .expect(201);
+
+  const res = await request(app.getHttpServer())
+    .post('/auth/login')
+    .send({ email: 'nita@gmail.com', password: '123456' })
+    .expect(200);
+
+  token = res.body.access_token;
+
+  await request(app.getHttpServer())
+    .get('/posts')
+    .set('Authorization', `Bearer ${token}`)
+    .expect(200);
+});
+```
+
+---
+
+## 🧠 Teknologi yang Digunakan
+
+| Teknologi              | Deskripsi                             |
+| ---------------------- | ------------------------------------- |
+| **NestJS**             | Framework backend berbasis TypeScript |
+| **TypeORM**            | ORM untuk koneksi ke database SQL     |
+| **PostgreSQL/MySQL**   | Database relational                   |
+| **JWT (jsonwebtoken)** | Untuk autentikasi dan otorisasi       |
+| **Bcrypt**             | Untuk hashing password                |
+| **Supertest + Jest**   | Untuk E2E testing                     |
+
+---
+
+## 📌 Kesimpulan
+
+Proyek ini menunjukkan implementasi dasar sistem backend modern dengan:
+
+- Struktur modular yang rapi
+- Autentikasi JWT
+- Relasi antar entitas (User ↔ Post)
+- Pengujian end-to-end (E2E)
+
+Pattern modular membuat proyek lebih mudah dikembangkan, dimaintain, dan diuji — cocok untuk skala kecil hingga menengah.
+
+---
+
+## 👩‍💻 Author
+
+**Nita Fitrotul Mar’ah**
+📧 [nitafitrotul1904@gmail.com](mailto:nitafitrotul1904@gmail.com)
+💻 Telkom University Purwokerto
+✨ "Belajar dari proyek kecil, menuju sistem besar."
